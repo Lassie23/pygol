@@ -1,41 +1,98 @@
-bx = 10
-by = 10
-board = [0,0,0,0,0,0,0,0,0,0,
-         0,1,0,0,0,0,0,0,0,0,
-         0,0,1,1,0,0,0,0,0,0,
-         0,1,1,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0]
-sboard = [0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0,
-         0,0,0,0,0,0,0,0,0,0]
+import pygame
+pygame.init()
+bx = input("enter board width(leave blank for 10): ")
+by = input("enter board height(leave blank for 10): ")
+res = input("enter cell size in pixels(leave blank for 100): ")
+survival = input("enter survival conditions(23 is classic GOL): ")
+birth = input("enter birth conditions(3 is classic GOL): ")
+if bx == "":
+    bx = 10
+else:
+    bx = int(bx)
+if by == "":
+    by = 10
+else:
+    by = int(by)
+if res == "":
+    res = 100
+else:
+    res = int(res)
+screen = pygame.display.set_mode((bx*res, by*res))
+board = []
+sboard = []
+upd = False
+for z in range(0,bx*by):
+    board.append(0)
+    sboard.append(0)
 def updateboard():
     x = -1
+    for z in range(0,bx*by):
+        sboard[z] = 0
     for y in board:
-        x = x + 1
-        if x % bx != 0 and x % bx != bx - 1:
-            if x > bx - 1 and x < bx * by - bx:
-                sboard[x] = board[x-bx-1] + board[x-bx] + board[x-bx+1] + board[x-1] + board[x+1] + board[x+bx-1] + board[x+bx] + board[x+bx+1]
+        x += 1
+        uedge = False
+        dedge = False
+        ledge = False
+        redge = False
+        if x % bx == 0:
+            ledge = True
+        elif x % bx == bx - 1:
+            redge = True
+        if x < bx:
+            uedge = True
+        elif x > bx * by - bx - 1:
+            dedge = True
+        if ledge == False:
+            sboard[x] += board[x-1]
+        if redge == False:
+            sboard[x] += board[x+1]
+        if uedge == False:
+            sboard[x] += board[x-bx]
+            if ledge == False:
+                sboard[x] += board[x-bx-1]
+            if redge == False:
+                sboard[x] += board[x-bx+1]
+        if dedge == 0:
+            sboard[x] += board[x+bx]
+            if ledge == 0:
+                sboard[x] += board[x+bx-1]
+            if redge == 0:
+                sboard[x] += board[x+bx+1]
     x = -1
     for y in board:
-        x = x + 1
+        x += 1
         if board[x] == 1:
-            if sboard[x] < 2 or sboard[x] > 3:
+            if not str(sboard[x]) in [*survival]:
                 board[x] = 0
         else:
-            if sboard[x] == 3:
+            if str(sboard[x]) in birth:
                 board[x] = 1
+def draw():
+    screen.fill((0,0,0))
+    x = -1
+    for y in board:
+        x += 1
+        if y == 1:
+            screen.fill((255,255,255),(x % bx * res,x // bx * res,res,res))
+    pygame.display.flip()
 while True:
-    input(board)
-    updateboard()
+    for event in pygame.event.get():
+        if event.type == 771:
+            if event.__dict__["text"] == " ":
+                upd = True
+            elif event.__dict__["text"] == "r":
+                for z in range(0,bx*by):
+                    board[z] = 0
+            draw()
+        if event.type == 1025:
+            if board[(event.__dict__["pos"][0]//res)+(event.__dict__["pos"][1]//res*bx)] == 0:
+                board[(event.__dict__["pos"][0]//res)+(event.__dict__["pos"][1]//res*bx)] = 1
+            else:
+                board[(event.__dict__["pos"][0]//res)+(event.__dict__["pos"][1]//res*bx)] = 0
+            draw()
+        elif event.type == pygame.QUIT:
+            pygame.quit()
+    if upd == True:
+        updateboard()
+        draw()
+        upd = False
