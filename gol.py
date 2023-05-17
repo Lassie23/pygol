@@ -1,22 +1,26 @@
 import pygame
 pygame.init()
-bx = input("enter board width(leave blank for 10): ")
-by = input("enter board height(leave blank for 10): ")
-res = input("enter cell size in pixels(leave blank for 100): ")
-survival = input("enter survival conditions(23 is classic GOL): ")
-birth = input("enter birth conditions(3 is classic GOL): ")
+bx = input("enter board width(leave blank for 192): ")
+by = input("enter board height(leave blank for 108): ")
+res = input("enter cell size in pixels(leave blank for 10): ")
+survival = input("enter survival conditions(leave blank for 23, classic GOL, or 9 for no survival): ")
+birth = input("enter birth conditions(leave blank for 3, classic GOL, or 9 for no birth): ")
 if bx == "":
-    bx = 10
+    bx = 192
 else:
     bx = int(bx)
 if by == "":
-    by = 10
+    by = 108
 else:
     by = int(by)
 if res == "":
-    res = 100
+    res = 10
 else:
     res = int(res)
+if survival == "":
+    survival = "23"
+if birth == "":
+    birth = "3"
 screen = pygame.display.set_mode((bx*res, by*res))
 board = []
 sboard = []
