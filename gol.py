@@ -3,7 +3,7 @@ pygame.init()
 bx = input("enter board width(leave blank for 192): ")
 by = input("enter board height(leave blank for 108): ")
 res = input("enter cell size in pixels(leave blank for 10): ")
-grl = input("enter grid line thickness in pixels(leave blank for 2, or 0 for no grid lines): ")
+grl = input("enter grid line thickness in pixels(leave blank for 1, or 0 for no grid lines): ")
 survival = input("enter survival conditions(leave blank for 23, classic GOL, or 9 for no survival): ")
 birth = input("enter birth conditions(leave blank for 3, classic GOL, or 9 for no birth): ")
 if bx == "":
@@ -19,7 +19,7 @@ if res == "":
 else:
     res = int(res)
 if grl == "":
-    grl = 2
+    grl = 1
 else:
     grl = int(grl)
 if survival == "":
@@ -83,9 +83,9 @@ def draw():
         x += 1
         if y == 1:
             screen.fill((255,255,255),(x % bx * res,x // bx * res,res,res))
-    for x in range(1,bx-1):
+    for x in range(1,bx):
         screen.fill((128,128,128),(x*res,0,grl,by*res))
-    for y in range(1,by-1):
+    for y in range(1,by):
         screen.fill((128,128,128),(0,y*res,bx*res,grl))
     pygame.display.flip()
 while True:
