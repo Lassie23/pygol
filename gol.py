@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 def getconfig():
     global bx
@@ -7,6 +8,7 @@ def getconfig():
     global grl
     global survival
     global birth
+    global dorand
     print()
     bx = input("enter board width(leave blank for 192): ")
     by = input("enter board height(leave blank for 108): ")
@@ -14,6 +16,7 @@ def getconfig():
     grl = input("enter grid line thickness in pixels(leave blank for 1, or 0 for no grid lines): ")
     survival = input("enter survival conditions(leave blank for 23, classic GOL, or 9 for no survival): ")
     birth = input("enter birth conditions(leave blank for 3, classic GOL, or 9 for no birth): ")
+    dorand = input("randomise cells? [Y/n]: ")
     if bx == "":
         bx = 192
     else:
@@ -34,6 +37,10 @@ def getconfig():
         survival = "23"
     if birth == "":
         birth = "3"
+    if dorand.lower() in ["","y","yes"]:
+        dorand = True
+    else:
+        dorand = False
 def makescreen():
     global screen
     global board
@@ -45,7 +52,10 @@ def makescreen():
         board.append([])
         sboard.append([])
         for y in range(0,by):
-            board[x].append(0)
+            if dorand:
+                board[x].append(random.choice([0,0,1]))
+            else:
+                board[x].append(0)
             sboard[x].append(0)
 getconfig()
 makescreen()
@@ -105,7 +115,10 @@ while True:
             elif event.__dict__["text"] == "r":
                 for a in range(0,bx):
                     for b in range(0,by):
-                        board[a][b] = 0
+                        if dorand:
+                            board[a][b] = random.choice([0,0,1])
+                        else:
+                            board[a][b] = 0
             elif event.__dict__["text"] == "c":
                 pygame.display.quit()
                 getconfig()
@@ -121,7 +134,7 @@ while True:
             draw()
         elif event.type == pygame.QUIT:
             quit()
-    if upd == True:
+    if upd:
         updateboard()
         draw()
         upd = False
