@@ -67,20 +67,52 @@ def updateboard():
             dedge = True
         if ledge == False:
             sboard[x] += board[x-1]
+        else:
+            sboard[x] += board[x-1+bx]
         if redge == False:
             sboard[x] += board[x+1]
+        else:
+            sboard[x] += board[x+1-bx]
         if uedge == False:
             sboard[x] += board[x-bx]
             if ledge == False:
                 sboard[x] += board[x-bx-1]
+            else:
+                sboard[x] += board[x-1]
             if redge == False:
                 sboard[x] += board[x-bx+1]
+            else:
+                sboard[x] += board[x-bx-bx+1]
+        else:
+            sboard[x] += board[x-bx+bx*by]
+            if ledge == False:
+                sboard[x] += board[x-bx-1+bx*by]
+            else:
+                sboard[x] += board[x-1+bx*by]
+            if redge == False:
+                sboard[x] += board[x-bx+1+bx*by]
+            else:
+                sboard[x] += board[x-bx-bx+1+bx*by]
         if dedge == 0:
             sboard[x] += board[x+bx]
             if ledge == 0:
                 sboard[x] += board[x+bx-1]
+            else:
+                sboard[x] += board[x+bx+bx-1]
             if redge == 0:
                 sboard[x] += board[x+bx+1]
+            else:
+                sboard[x] += board[x+1]
+        else:
+            sboard[x] += board[x+bx-bx*by]
+            if ledge == 0:
+                sboard[x] += board[x+bx-1-bx*by]
+            else:
+                sboard[x] += board[x+bx+bx-1-bx*by]
+            if redge == 0:
+                sboard[x] += board[x+bx+1-bx*by]
+            else:
+                sboard[x] += board[x+1-bx*by]
     x = -1
     for y in board:
         x += 1
