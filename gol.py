@@ -111,7 +111,8 @@ while True:
     for event in pygame.event.get():
         if event.type == 771:
             if event.__dict__["text"] == " ":
-                upd = True
+                updateboard()
+                draw()
             elif event.__dict__["text"] == "r":
                 for a in range(0,bx):
                     for b in range(0,by):
@@ -134,7 +135,3 @@ while True:
             draw()
         elif event.type == pygame.QUIT:
             quit()
-    if upd:
-        updateboard()
-        draw()
-        upd = False
