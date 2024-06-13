@@ -86,7 +86,7 @@ def updateboard():
         for b in a:
             y += 1
             if board[x][y] == 1:
-                if not str(sboard[x][y]) in [*survival]:
+                if not str(sboard[x][y]) in survival:
                     board[x][y] = 0
             else:
                 if str(sboard[x][y]) in birth:
