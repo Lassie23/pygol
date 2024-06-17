@@ -46,13 +46,11 @@ def makescreen():
     global board
     global sboard
     screen = pygame.display.set_mode((bx*res, by*res))
-    board = [[0 for y in range(0,by)] for x in range(0,bx)]
+    if dorand:
+        board = [[random.choice([0,0,1]) for y in range(0,by)] for x in range(0,bx)]
+    else:
+        board = [[0 for y in range(0,by)] for x in range(0,bx)]
     sboard = [[0 for y in range(0,by)] for x in range(0,bx)]
-    for x in range(0,bx):
-        for y in range(0,by):
-            if dorand:
-                if not bool(random.randrange(3)):
-                    board[x][y] = 1
 getconfig()
 makescreen()
 def updateboard():
@@ -108,12 +106,10 @@ while True:
             if event.__dict__["text"] == " ":
                 updateboard()
             elif event.__dict__["text"] == "r":
-                for a in range(0,bx):
-                    for b in range(0,by):
-                        if dorand:
-                            board[a][b] = random.choice([0,0,1])
-                        else:
-                            board[a][b] = 0
+                if dorand:
+                    board = [[random.choice([0,0,1]) for y in range(0,by)] for x in range(0,bx)]
+                else:
+                    board = [[0 for y in range(0,by)] for x in range(0,bx)]
             elif event.__dict__["text"] == "c":
                 pygame.display.quit()
                 getconfig()
