@@ -107,7 +107,6 @@ while True:
         if event.type == 771:
             if event.__dict__["text"] == " ":
                 updateboard()
-                draw()
             elif event.__dict__["text"] == "r":
                 for a in range(0,bx):
                     for b in range(0,by):
