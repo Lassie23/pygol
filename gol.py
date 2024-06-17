@@ -61,9 +61,6 @@ getconfig()
 makescreen()
 def updateboard():
     x = -1
-    for a in range(0,bx):
-        for b in range(0,by):
-            sboard[a][b] = board[a][b]
     for a in board:
         x += 1
         y = -1
@@ -79,7 +76,9 @@ def updateboard():
             board[(x+1)%bx][y] +
             board[(x+1)%bx][(y+1)%by])
             if board[x][y] == 1:
-                if not z in survival:
+                if z in survival:
+                    sboard[x][y] = 1
+                else:
                     sboard[x][y] = 0
             else:
                 if z in birth:
@@ -90,7 +89,7 @@ def updateboard():
         y = -1
         for b in a:
             y += 1
-            board[x][y] = sboard[x][y] 
+            board[x][y] = sboard[x][y]
 def draw():
     screen.fill((0,0,0))
     x = -1
