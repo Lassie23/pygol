@@ -46,17 +46,12 @@ def makescreen():
     global board
     global sboard
     screen = pygame.display.set_mode((bx*res, by*res))
-    board = []
-    sboard = []
+    board = [[0 for y in range(0,by)] for x in range(0,bx)]
+    sboard = [[0 for y in range(0,by)] for x in range(0,bx)]
     for x in range(0,bx):
-        board.append([])
-        sboard.append([])
         for y in range(0,by):
             if dorand:
-                board[x].append(random.choice([0,0,1]))
-            else:
-                board[x].append(0)
-            sboard[x].append(0)
+                board[x][y] = random.choice([0,0,1])
 getconfig()
 makescreen()
 def updateboard():
