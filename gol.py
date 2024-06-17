@@ -51,7 +51,8 @@ def makescreen():
     for x in range(0,bx):
         for y in range(0,by):
             if dorand:
-                board[x][y] = random.choice([0,0,1])
+                if not bool(random.randrange(3)):
+                    board[x][y] = 1
 getconfig()
 makescreen()
 def updateboard():
