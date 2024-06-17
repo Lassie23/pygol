@@ -8,7 +8,7 @@ def getconfig():
     global grl
     global survival
     global birth
-    global dorand
+    global randomcell
     print()
     bx = input("enter board width(leave blank for 192): ")
     by = input("enter board height(leave blank for 108): ")
@@ -16,7 +16,7 @@ def getconfig():
     grl = input("enter grid line thickness in pixels(leave blank for 1, or 0 for no grid lines): ")
     survival = input("enter survival conditions(leave blank for 23, classic GOL, or 9 for no survival): ")
     birth = input("enter birth conditions(leave blank for 3, classic GOL, or 9 for no birth): ")
-    dorand = input("randomise cells? [Y/n]: ")
+    randomcell = input("randomise cells? [Y/n]: ")
     if bx == "":
         bx = 192
     else:
@@ -37,11 +37,10 @@ def getconfig():
         survival = "23"
     if birth == "":
         birth = "3"
-    if dorand.lower() in ["","y","yes"]:
-        dorand = True
+    if randomcell.lower() in ["","y","yes"]:
+        randomcell = lambda : random.choice([0,0,1])
     else:
-        dorand = False
-randomcell = lambda : random.choice([0,0,1]) if dorand else 0
+        randomcell = lambda : 0
 def makescreen():
     global screen
     global board
