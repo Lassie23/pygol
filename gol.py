@@ -59,7 +59,6 @@ def makescreen():
             sboard[x].append(0)
 getconfig()
 makescreen()
-upd = False
 def updateboard():
     x = -1
     for a in range(0,bx):
