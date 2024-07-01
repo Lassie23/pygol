@@ -45,7 +45,7 @@ def makescreen():
     global screen
     global board
     global sboard
-    screen = pygame.display.set_mode((bx*res, by*res)) 
+    screen = pygame.display.set_mode((bx*res, by*res))
     board = [[randomcell() for y in range(0,by)] for x in range(0,bx)]
     sboard = [[0 for y in range(0,by)] for x in range(0,bx)]
 getconfig()
